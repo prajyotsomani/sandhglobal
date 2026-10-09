@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { Layout } from "./components/layout/Layout";
 import { HomePage } from "./pages/HomePage";
-import { AboutPage } from "./pages/AboutPage";
 import { ServicesPage } from "./pages/ServicesPage";
 import { ProductsPage } from "./pages/ProductsPage";
 import { ProcessPage, WhyUsPage } from "./pages/ProcessPage";
 import { ContactPage } from "./pages/ContactPage";
+import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("Home");
@@ -21,8 +21,6 @@ export default function App() {
     switch (currentPage) {
       case "Home":
         return <HomePage key={pageKey.current} onNavigate={handleNavigate} />;
-      case "About":
-        return <AboutPage key={pageKey.current} />;
       case "Services":
         return <ServicesPage key={pageKey.current} onNavigate={handleNavigate} />;
       case "Products":
@@ -33,6 +31,8 @@ export default function App() {
         return <WhyUsPage key={pageKey.current} />;
       case "Contact":
         return <ContactPage key={pageKey.current} />;
+      case "Privacy Policy":
+        return <PrivacyPolicyPage key={pageKey.current} />;
       default:
         return <HomePage key={pageKey.current} onNavigate={handleNavigate} />;
     }

@@ -1,4 +1,5 @@
 import React from "react";
+import { Mail, Phone } from "lucide-react";
 import { LOGO_B64 } from "../../data/assets";
 import { PAGES, FOOTER_SERVICES } from "../../data/navigationData";
 
@@ -19,18 +20,23 @@ export function Footer({ onNavigate }) {
             </p>
             <div className="flex gap-3">
               {[
-                { href: "mailto:info@sandhgloballtd.co.nz", label: "Email", icon: "M" },
-                { href: "tel:+64225557076", label: "Phone", icon: "P" },
+                { href: "mailto:info@sandhgloballtd.co.nz", label: "Email", Icon: Mail },
+                { href: "tel:+64225557076", label: "Phone", Icon: Phone },
                 { href: "http://www.sandhgloballtd.co.nz", label: "Website", icon: "W" }
               ].map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
+                  aria-label={item.label}
                   target={item.href.startsWith("http") ? "_blank" : undefined}
                   rel="noopener noreferrer"
                   className="w-9 h-9 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center transition-colors hover:bg-gold hover:border-gold group"
                 >
-                  <span className="text-gold text-xs font-bold group-hover:text-black">{item.icon}</span>
+                  {item.Icon ? (
+                    <item.Icon size={16} className="text-gold group-hover:text-black" aria-hidden="true" />
+                  ) : (
+                    <span className="text-gold text-xs font-bold group-hover:text-black">{item.icon}</span>
+                  )}
                 </a>
               ))}
             </div>
@@ -50,6 +56,14 @@ export function Footer({ onNavigate }) {
                   </button>
                 </li>
               ))}
+              <li>
+                <button
+                  onClick={() => onNavigate("Privacy Policy")}
+                  className="text-muted hover:text-off-white text-xs md:text-sm transition-all hover:translate-x-1 cursor-pointer"
+                >
+                  Privacy Policy
+                </button>
+              </li>
             </ul>
           </div>
 
