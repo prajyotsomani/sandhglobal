@@ -61,21 +61,45 @@ export function ContactInfo() {
 
 export function ContactForm() {
   const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", role: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState({ type: "idle", message: "" });
+  const [isSending, setIsSending] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
+    setIsSending(true);
+    setStatus({ type: "idle", message: "" });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        throw new Error("The inquiry could not be sent.");
+      }
+
+      setStatus({ type: "success", message: "Your message has been sent successfully." });
+      setForm({ name: "", company: "", email: "", phone: "", role: "", message: "" });
+    } catch (error) {
+      console.error("Inquiry submission failed:", error);
+      setStatus({
+        type: "error",
+        message: "Something went wrong while sending the message. Please try again or contact us directly.",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
     <div className="bg-dark-2 border border-gold/20 rounded-2xl p-6 md:p-8 shadow-2xl">
       <h3 className="text-xl font-bold text-off-white mb-6">Send Us a Message</h3>
 
-      {submitted ? (
+      {status.type === "success" ? (
         <div className="text-center py-12 px-4 border border-gold bg-gold/5 rounded-xl">
           <div className="text-4xl text-gold mb-3">✓</div>
           <h3 className="text-lg font-bold text-off-white mb-1">Message Sent!</h3>
@@ -164,11 +188,16 @@ export function ContactForm() {
             />
           </div>
 
+          {status.type === "error" && (
+            <p className="text-xs text-red-400">{status.message}</p>
+          )}
+
           <button
             type="submit"
-            className="mt-2 bg-gold-gradient text-black font-bold text-xs uppercase tracking-widest py-3 px-6 rounded-md hover:brightness-110 hover:-translate-y-0.5 transition-all shadow-md shadow-gold/20 cursor-pointer"
+            disabled={isSending}
+            className="mt-2 bg-gold-gradient text-black font-bold text-xs uppercase tracking-widest py-3 px-6 rounded-md hover:brightness-110 hover:-translate-y-0.5 transition-all shadow-md shadow-gold/20 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Send Inquiry →
+            {isSending ? "Sending..." : "Send Inquiry →"}
           </button>
         </form>
       )}

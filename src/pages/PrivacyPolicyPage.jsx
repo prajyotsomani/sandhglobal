@@ -6,7 +6,7 @@ const sections = [
     title: "Information you provide",
     content: [
       "You may choose to share information such as your name, company, email address, phone number, business role, and inquiry when contacting S&H Global Limited by email, phone, or WhatsApp.",
-      "The inquiry form on this website currently displays a confirmation in your browser but does not transmit or save the information you enter. Please contact us directly using the email or phone links if you need to send an inquiry."
+      "When you submit the inquiry form, we use the details you enter to deliver your message to our team. The website does not store the inquiry form submission in its own database."
     ]
   },
   {
@@ -18,7 +18,7 @@ const sections = [
   {
     title: "Third-party services",
     content: [
-      "When you use an email, telephone, or WhatsApp link, your communication is handled by the service you choose. Those providers may process information according to their own privacy policies and terms. This website does not control their practices."
+      "We use Resend to deliver inquiry form emails. When you use an email, telephone, or WhatsApp link, your communication is handled by the service you choose. Those providers may process information according to their own privacy policies and terms. This website does not control their practices."
     ]
   },
   {
