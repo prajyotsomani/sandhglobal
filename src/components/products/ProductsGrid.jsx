@@ -3,6 +3,8 @@ import { PRODUCT_TABS, PRODUCTS } from "../../data/productsData";
 import { Button } from "../common/Button";
 
 function ProductIcon({ cat }) {
+  if (cat === "all") return null;
+
   const icons = {
     food: (
       <>
@@ -48,30 +50,61 @@ function ProductIcon({ cat }) {
     )
   };
 
+  if (!icons[cat]) return null;
+
   return (
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      {icons[cat] || icons.food}
+      {icons[cat]}
     </svg>
   );
 }
 
-export function ProductCard({ item, onEnquire }) {
-  return (
-    <div className="bg-dark-1 border border-gold/15 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-gold hover:shadow-lg hover:shadow-gold/10 flex flex-col">
-      <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center mb-4">
-        <ProductIcon cat={item.cat} />
-      </div>
+const DEFAULT_PRODUCT_IMAGE = "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=800&q=80";
 
-      <span className="text-[10px] font-semibold text-gold uppercase tracking-wider mb-1 block">
+const PRODUCT_BOX_IMAGES = {
+  "Spices & Grains": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80",
+  "Packaged Foods": "https://images.unsplash.com/photo-1722639096629-79ee4e9e2903?auto=format&fit=crop&w=800&q=80",
+  "Garments & Fabric": "https://images.unsplash.com/photo-1771098206650-81d713e2e2b9?auto=format&fit=crop&w=800&q=80",
+  "Industrial Goods": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
+  "Lifestyle & Home": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
+  "Health & Wellness": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
+  "Premium Dry Fruits": "https://images.unsplash.com/photo-1508779018996-601e37fa274e?auto=format&fit=crop&w=800&q=80",
+  "Handmade & Artisan": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80"
+};
+
+export function ProductCard({ item, onEnquire }) {
+  const bgImage = PRODUCT_BOX_IMAGES[item.title] || DEFAULT_PRODUCT_IMAGE;
+
+  return (
+    <div className="relative overflow-hidden bg-dark-1 border border-gold/15 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-gold hover:shadow-lg hover:shadow-gold/10 flex flex-col group">
+      {bgImage && (
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+          style={{
+            backgroundImage: `url(${bgImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center"
+          }}
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/82 to-black/92 pointer-events-none transition-colors duration-300 group-hover:from-black/65 group-hover:via-black/78 group-hover:to-black/88" />
+
+      {item.cat !== "all" && item.title !== "All Categories" && (
+        <div className="relative z-10 w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center mb-4">
+          <ProductIcon cat={item.cat} />
+        </div>
+      )}
+
+      <span className="relative z-10 text-[10px] font-semibold text-gold uppercase tracking-wider mb-1 block">
         {item.badge}
       </span>
 
-      <h3 className="text-lg font-bold text-off-white mb-2">{item.title}</h3>
-      <p className="text-xs text-muted leading-relaxed mb-4">{item.desc}</p>
+      <h3 className="relative z-10 text-lg font-bold text-white mb-2">{item.title}</h3>
+      <p className="relative z-10 text-xs text-off-white/80 leading-relaxed mb-4">{item.desc}</p>
 
-      <ul className="mt-auto pt-4 border-t border-white/10 flex flex-col gap-1.5 list-none p-0 mb-5">
+      <ul className="relative z-10 mt-auto pt-4 border-t border-white/10 flex flex-col gap-1.5 list-none p-0 mb-5">
         {item.items.map((it) => (
-          <li key={it} className="text-xs text-off-white/75 relative pl-4">
+          <li key={it} className="text-xs text-off-white/85 relative pl-4">
             <span className="text-gold absolute left-0 top-0">•</span>
             {it}
           </li>
@@ -80,7 +113,7 @@ export function ProductCard({ item, onEnquire }) {
 
       <button
         onClick={onEnquire}
-        className="w-full bg-transparent border border-gold/30 text-gold hover:bg-gold hover:text-black hover:border-gold py-2 text-xs font-semibold rounded transition-all cursor-pointer"
+        className="relative z-10 w-full bg-transparent border border-gold/30 text-gold hover:bg-gold hover:text-black hover:border-gold py-2 text-xs font-semibold rounded transition-all cursor-pointer"
       >
         Enquire Now
       </button>
@@ -121,3 +154,4 @@ export function ProductsGrid({ onEnquire }) {
     </div>
   );
 }
+
