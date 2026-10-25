@@ -63,11 +63,11 @@ const DEFAULT_PRODUCT_IMAGE = "https://images.unsplash.com/photo-1578575437130-5
 
 const PRODUCT_BOX_IMAGES = {
   "Spices & Grains": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80",
-  "Packaged Foods": "https://images.unsplash.com/photo-1722639096629-79ee4e9e2903?auto=format&fit=crop&w=800&q=80",
-  "Garments & Fabric": "https://images.unsplash.com/photo-1771098206650-81d713e2e2b9?auto=format&fit=crop&w=800&q=80",
+  "Packaged Foods": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80",
+  "Garments & Fabric": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80",
   "Industrial Goods": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
-  "Lifestyle & Home": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
-  "Health & Wellness": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
+  "Lifestyle & Home": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
+  "Health & Wellness": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80",
   "Premium Dry Fruits": "https://images.unsplash.com/photo-1508779018996-601e37fa274e?auto=format&fit=crop&w=800&q=80",
   "Handmade & Artisan": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80"
 };
@@ -76,10 +76,10 @@ export function ProductCard({ item, onEnquire }) {
   const bgImage = PRODUCT_BOX_IMAGES[item.title] || DEFAULT_PRODUCT_IMAGE;
 
   return (
-    <div className="relative overflow-hidden bg-dark-1 border border-gold/15 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-gold hover:shadow-lg hover:shadow-gold/10 flex flex-col group">
+    <div className="relative overflow-hidden bg-dark-1 border border-gold/20 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/60 hover:shadow-xl hover:shadow-gold/10 flex flex-col group">
       {bgImage && (
         <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-108 pointer-events-none"
           style={{
             backgroundImage: `url(${bgImage})`,
             backgroundSize: "cover",
@@ -87,25 +87,25 @@ export function ProductCard({ item, onEnquire }) {
           }}
         />
       )}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/82 to-black/92 pointer-events-none transition-colors duration-300 group-hover:from-black/65 group-hover:via-black/78 group-hover:to-black/88" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/65 to-black/90 pointer-events-none transition-colors duration-300 group-hover:from-black/35 group-hover:via-black/55 group-hover:to-black/85" />
 
       {item.cat !== "all" && item.title !== "All Categories" && (
-        <div className="relative z-10 w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center mb-4">
+        <div className="relative z-10 w-12 h-12 rounded-xl bg-black/40 border border-gold/25 backdrop-blur-sm flex items-center justify-center mb-4 shadow-sm">
           <ProductIcon cat={item.cat} />
         </div>
       )}
 
-      <span className="relative z-10 text-[10px] font-semibold text-gold uppercase tracking-wider mb-1 block">
+      <span className="relative z-10 text-[11px] font-semibold text-gold uppercase tracking-wider mb-1 block drop-shadow-sm">
         {item.badge}
       </span>
 
-      <h3 className="relative z-10 text-lg font-bold text-white mb-2">{item.title}</h3>
-      <p className="relative z-10 text-xs text-off-white/80 leading-relaxed mb-4">{item.desc}</p>
+      <h3 className="relative z-10 text-xl font-bold text-white mb-2 tracking-tight drop-shadow-sm">{item.title}</h3>
+      <p className="relative z-10 text-xs text-off-white/90 leading-relaxed mb-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{item.desc}</p>
 
-      <ul className="relative z-10 mt-auto pt-4 border-t border-white/10 flex flex-col gap-1.5 list-none p-0 mb-5">
+      <ul className="relative z-10 mt-auto pt-4 border-t border-white/15 flex flex-col gap-1.5 list-none p-0 mb-5">
         {item.items.map((it) => (
-          <li key={it} className="text-xs text-off-white/85 relative pl-4">
-            <span className="text-gold absolute left-0 top-0">•</span>
+          <li key={it} className="text-xs text-off-white/90 relative pl-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+            <span className="text-gold absolute left-0 top-0 font-bold">•</span>
             {it}
           </li>
         ))}
@@ -113,13 +113,24 @@ export function ProductCard({ item, onEnquire }) {
 
       <button
         onClick={onEnquire}
-        className="relative z-10 w-full bg-transparent border border-gold/30 text-gold hover:bg-gold hover:text-black hover:border-gold py-2 text-xs font-semibold rounded transition-all cursor-pointer"
+        className="relative z-10 w-full bg-black/40 border border-gold/40 text-gold hover:bg-gold hover:text-black hover:border-gold py-2.5 text-xs font-semibold rounded-lg transition-all cursor-pointer backdrop-blur-xs shadow-sm"
       >
         Enquire Now
       </button>
     </div>
   );
 }
+
+const CATEGORY_TAB_IMAGES = {
+  all: DEFAULT_PRODUCT_IMAGE,
+  food: PRODUCT_BOX_IMAGES["Spices & Grains"],
+  textile: PRODUCT_BOX_IMAGES["Garments & Fabric"],
+  industrial: PRODUCT_BOX_IMAGES["Industrial Goods"],
+  consumer: PRODUCT_BOX_IMAGES["Lifestyle & Home"],
+  health: PRODUCT_BOX_IMAGES["Health & Wellness"],
+  dryfruits: PRODUCT_BOX_IMAGES["Premium Dry Fruits"],
+  artcraft: PRODUCT_BOX_IMAGES["Handmade & Artisan"]
+};
 
 export function ProductsGrid({ onEnquire }) {
   const [activeTab, setActiveTab] = useState("all");
@@ -130,19 +141,55 @@ export function ProductsGrid({ onEnquire }) {
     <div>
       {/* Category Tabs */}
       <div className="flex flex-wrap justify-center gap-2 mb-10">
-        {PRODUCT_TABS.map(([val, label]) => (
-          <button
-            key={val}
-            onClick={() => setActiveTab(val)}
-            className={`px-4 py-2 text-xs font-medium rounded-full border transition-all cursor-pointer ${
-              activeTab === val
-                ? "bg-gold text-black border-gold font-semibold shadow-md shadow-gold/20"
-                : "bg-dark-2 text-off-white border-gold/20 hover:border-gold hover:text-gold"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
+        {PRODUCT_TABS.map(([val, label]) => {
+          const isActive = activeTab === val;
+          const bgImg = CATEGORY_TAB_IMAGES[val] || DEFAULT_PRODUCT_IMAGE;
+
+          return (
+            <button
+              key={val}
+              type="button"
+              onClick={() => setActiveTab(val)}
+              className={`group relative overflow-hidden isolate px-4 py-2 text-xs rounded-full border transition-all duration-300 cursor-pointer ${
+                isActive
+                  ? "border-gold shadow-[0_0_12px_rgba(201,168,76,0.25)] ring-1 ring-gold/50"
+                  : "border-gold/30 hover:border-gold/80 bg-dark-2 hover:shadow-[0_0_8px_rgba(201,168,76,0.15)]"
+              }`}
+            >
+              {/* Background image */}
+              <span
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-out group-hover:scale-110 pointer-events-none"
+                style={{
+                  backgroundImage: `url(${bgImg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}
+                aria-hidden="true"
+              />
+
+              {/* Subtle dark overlay for text legibility */}
+              <span
+                className={`absolute inset-0 pointer-events-none transition-colors duration-300 ${
+                  isActive
+                    ? "bg-gradient-to-b from-black/45 via-gold/15 to-black/60 group-hover:from-black/40 group-hover:via-gold/20 group-hover:to-black/55"
+                    : "bg-black/60 group-hover:bg-black/45"
+                }`}
+                aria-hidden="true"
+              />
+
+              {/* Category label */}
+              <span
+                className={`relative z-10 transition-colors duration-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] whitespace-nowrap ${
+                  isActive
+                    ? "text-gold font-semibold tracking-wide"
+                    : "text-off-white/90 group-hover:text-white font-medium tracking-wide"
+                }`}
+              >
+                {label}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Grid */}
